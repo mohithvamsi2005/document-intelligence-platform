@@ -17,8 +17,6 @@ cp .env.example .env
 # Run
 docker-compose up
 ```
-Access at: http://localhost:8501
-
 ### Option 2: Local Python
 ```bash
 # Create virtual environment
