@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+chroma_db/
+uploads/
+.git/
+.gitignore
+*.md
+tests/
+.streamlit/

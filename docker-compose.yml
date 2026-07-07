@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  document-intelligence:
+    # Build from our Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # Container name
+    container_name: document-intelligence-platform
+
+    # Map host port 8501 to container port 8501
+    # Access app at http://localhost:8501
+    ports:
+      - "8501:8501"
+
+    # Load API keys from .env file
+    # Keys stay out of the image — loaded at runtime only
+    env_file:
+      - .env
+
+    # Mount volumes — persist data outside the container
+    # If container is deleted, your data survives
+    volumes:
+      - ./uploads:/app/uploads       # uploaded PDFs
+      - ./chroma_db:/app/chroma_db   # vector database
+      - ./data:/app/data             # sample data
+
+    # Restart policy
+    # 'unless-stopped' = restart on crash, but not if manually stopped
+    restart: unless-stopped
+
+    # Resource limits — prevent runaway memory usage
+    deploy:
+      resources:
+        limits:
+          memory: 4G    # 4GB RAM max (sentence-transformers needs ~1GB)
+        reservations:
+          memory: 1G    # Reserve 1GB minimum
